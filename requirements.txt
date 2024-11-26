@@ -1,0 +1,7 @@
+streamlit
+streamlit_option_menu
+azure-storage-blob
+azure-cosmos
+openai
+azure-identity
+pillow
