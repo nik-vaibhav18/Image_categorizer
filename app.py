@@ -3,7 +3,9 @@ import zipfile
 import streamlit as st
 from streamlit_option_menu import option_menu
 from src.categorizer_func import read_prompt,generate_text,encode_image_to_base64,resize_image
-
+import json
+from src.categorizer_db import upload_to_blob,initialize_cosmos,insert_metadata_to_cosmos
+from uuid import uuid4
 
 st.set_page_config(page_title="Alberson's Assistant",
                    layout="wide",
@@ -14,7 +16,7 @@ with st.sidebar:
     selected = option_menu('Albertson Image category Prediction System',
 
                            ['Image Categorization predictor',
-                            'Searching of Categories',
+                            'Seaching of Categories',
                             ],
                            menu_icon='robot',
                            icons=[ 'tags-fill', 'person'],
@@ -47,8 +49,16 @@ if selected == 'Image Categorization predictor':
                 resize_image(image_path)
 
                 image_base_64=encode_image_to_base64(image_path)
+                container = initialize_cosmos()
+                blob_url = upload_to_blob(image_path)
+
+
                 with st.spinner("processing...."):
                     response=generate_text(instructions,image_base_64)
+
+                image_id = str(uuid4())
+                insert_metadata_to_cosmos(container, image_id, blob_url, json.loads(response))
+
 
                 st.write(f"{os.path.basename(image_path)} generated successfully!!!")
 
@@ -58,8 +68,7 @@ if selected == 'Image Categorization predictor':
                     st.image(image_path, caption="Uploaded Image", use_column_width=True)
 
                 with col2:
-                    st.text(response)
-
+                    st.json(json.loads(response))
 
 
 
