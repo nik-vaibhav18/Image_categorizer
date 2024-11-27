@@ -16,40 +16,40 @@ This app uses OpenAI GPT-4o to analyze an image and generate a JSON metadata
 
 
 # to build docker container 
-''' bash
+``` bash
 docker build -t image-categorizer.v1.0 .
-'''
+```
 
 # docker conatiner running
-'''bash
+```bash
 docker ps
-'''
+```
 
 # to run the image and create container
-'''bash
+```bash
  docker run -p 8501:8501 <image id>
-'''
+```
 
 # after killing still few images meta data will be running see using
-'''bash
+```bash
 docker ps -a
-'''
+```
 
 # to see docker images
-'''bash
+```bash
 docker images
-'''
+```
 
 # push new image to repo to share with anyone
-'''
+```bash
 docker tag local-image:tagname new-repo:tagname
 docker push new-repo:tagname
-'''
+```
 
 # Docker container URl
-'''
+```
 https://hub.docker.com/repository/docker/nik18/image-categorizer/general
-'''
+```
 
 
 
