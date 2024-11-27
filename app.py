@@ -61,14 +61,17 @@ if selected == 'Image Categorization predictor':
 
 
                 st.write(f"{os.path.basename(image_path)} generated successfully!!!")
+                data = json.loads(response)
 
                 col1,col2=st.columns(2)
 
                 with col1:
-                    st.image(image_path, caption="Uploaded Image", use_column_width=True)
+                    st.image(image_path, caption="Uploaded Image")
 
                 with col2:
-                    st.json(json.loads(response))
+                    
+
+                    st.json(data)
 
 
 
