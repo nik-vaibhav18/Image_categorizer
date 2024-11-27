@@ -3,12 +3,15 @@ import azure.identity
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider  
 from PIL import Image
 import openai
+import os
+from dotenv import load_dotenv
+import json
 openai_credential = DefaultAzureCredential()
 token_provider = get_bearer_token_provider(openai_credential, "https://cognitiveservices.azure.com/.default")
-import os
 
+load_dotenv()
 azure_openai_key=os.getenv("AZURE_OPENAI_KEY")
-azure_openai_endpoint=os.getenv("AZURE_OPENIAI_ENDPOINT")
+azure_openai_endpoint="https://nikhi-m3y8inyh-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
 
 def read_prompt(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -49,3 +52,6 @@ def generate_text(prompt_instruction,image_base64):
     max_tokens=500,
     )
     return response.choices[0].message.content
+
+
+

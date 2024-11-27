@@ -5,3 +5,4 @@ azure-cosmos
 openai
 azure-identity
 pillow
+python-dotenv
