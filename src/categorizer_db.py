@@ -44,3 +44,29 @@ def insert_metadata_to_cosmos(container, image_id, blob_url, gpt_response):
         "gpt_response": gpt_response
     }
     container.upsert_item(item)
+
+
+def search_cosmos_nested_field(field_path, field_value):
+    """
+    Query Cosmos DB for rows where a specific nested field contains the given value.
+    
+    Args:
+    - field_path: The path to the nested field (e.g., 'gpt_response.seasonal_evergreen').
+    - field_value: The value to search for (e.g., 'Mother\'s Day').
+
+    Returns:
+    - List of matching rows.
+    """
+    database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
+    container = database.get_container_client(COSMOS_CONTAINER_NAME)
+
+    # Query to match a value inside a nested field
+    query = f"""
+    SELECT * FROM c
+    WHERE ARRAY_CONTAINS(c.{field_path}, @field_value)
+    """
+    parameters = [{"name": "@field_value", "value": field_value}]
+
+    results = list(container.query_items(query=query, parameters=parameters, enable_cross_partition_query=True))
+    return results
+
