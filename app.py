@@ -12,13 +12,13 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-st.set_page_config(page_title="Alberson's Assistant",
+st.set_page_config(page_title="AI's Assistant",
                    layout="wide",
                    page_icon="🧑‍⚕️")
 
 
 with st.sidebar:
-    selected = option_menu('Albertson Image category Prediction System',
+    selected = option_menu(' Image category Prediction System',
 
                            ['Image Categorization predictor',
                             'Searching of Categories',
@@ -38,7 +38,7 @@ if selected == 'Image Categorization predictor':
     )
 
     uploaded_zip = st.file_uploader("Upload a zip file containing images", type=["zip"])
-    prompt_path ="Prompt_Albertsons.txt"
+    prompt_path ="Prompt_text.txt"
 
     if uploaded_zip and prompt_path:
         instructions=read_prompt(prompt_path)
